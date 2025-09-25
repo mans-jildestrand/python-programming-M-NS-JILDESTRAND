@@ -1,7 +1,7 @@
 import math
 
-# Training data
-# Format: (width, height, label)
+# Some training examples
+# format is (width, height, label)
 training_data = [
     (25, 32, "Pikachu"),
     (24.2, 31.5, "Pikachu"),
@@ -10,11 +10,11 @@ training_data = [
 ]
 
 def distance(p1, p2):
-    """Calculate Euclidean distance between two points"""
+    # euclidean distance formula
     return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 
 def classify(point):
-    """Classify a point by finding the nearest neighbor"""
+    # nearest neighbour classification
     closest = None
     min_dist = float("inf")
 
@@ -26,8 +26,8 @@ def classify(point):
 
     return closest[2]
 
-# Test with given points (compare with expected results)
-print("=== Testing given points ===")
+# quick test with the training data
+print("=== Testing ===")
 test_points = [
     (25, 32, "Pikachu"),
     (24.2, 31.5, "Pikachu"),
@@ -37,20 +37,29 @@ test_points = [
 
 for tp in test_points:
     predicted = classify((tp[0], tp[1]))
-    print(f"Point ({tp[0]}, {tp[1]}) -> Predicted: {predicted}, Expected: {tp[2]}")
+    print(f"Point {tp[0]}, {tp[1]} -> Predicted: {predicted}, Expected: {tp[2]}")
 
-print("\n=== Classify your own points ===")
+# user can try their own
+print("\n=== Try it yourself ===")
 while True:
     try:
-        width = float(input("Enter width: "))
-        height = float(input("Enter height: "))
+        width = input("Enter width (or q to quit): ")
+        if width.lower() == "q":
+            break
+        height = input("Enter height (or q to quit): ")
+        if height.lower() == "q":
+            break
+
+        width = float(width)
+        height = float(height)
 
         if width <= 0 or height <= 0:
-            print("Error: width and height must be positive numbers.\n")
+            print("Width and height must be positive!\n")
             continue
 
         result = classify((width, height))
-        print(f"Point ({width}, {height}) is classified as {result}\n")
+        print(f"({width}, {height}) classified as {result}\n")
 
-    except ValueError:
-        print("Error: please enter numeric values.\n")
+    except:
+        # user typed something weird
+        print("Invalid input, try again.\n")
